@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <stdlib.h> 
+#include <ctime>
 using namespace std;
 /*
 [Angel Eduardo Muñoz perez]
@@ -29,32 +30,24 @@ int res[10][10];//matriz 3
 
 int main()
 {
-	
-
+	system("cls");
 	cout <<"        Bienvenido estimado"<<endl;
 	cout <<"       Programa de matrices"<<endl;
 	cout <<"De que tamaño quieres que sean las matrices?"<<endl;
-
 //pongo rango y valido tamano
 	while (true)
 			{
-			if (cin >> tamano)
+			if (cin >> tamano && tamano <11 && tamano >1)
 				{
 					break;
-				}else if (tamano <2)
-				{
-					cout <<"Pon un tamaño mas grande porfas"<<endl;
-					main();
-				}else if (tamano >10)
-				{
-					cout <<"Pon un tamaño mas chico porfas"<<endl;
-					main();
-				}
-				else
+				
+				}else
 				{
 					cout <<"Pon el tamano en numeros cari\ño"<<endl;
 					cin.clear();
-					cin.ignore(numeric_limits<std::streamsize>::max(), '\n');					
+					cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+					system("pause");
+					main();					
 				}//fin del if para validar
 			}//fin del while para validar	
 
@@ -62,11 +55,9 @@ int main()
 }//fin de F MAIN
 
 
-
 void matriz()
 {
-
-	srand((unsigned)(NULL));//para quitar el patron de aleaotiro
+	srand((unsigned)time(NULL));//para quitar el patron de aleaotiro
 	system("cls");
 	int a[tamano][tamano];//matriz 1
 	int b[tamano][tamano];//matriz 2
@@ -83,7 +74,8 @@ void matriz()
 		}
 		printf("\n");
 	}//fin de for para matriz 1
-	
+	c=0;
+	f=0;
 	cout<<"Matriz 2"<<endl;
 		for(c=0;c<tamano;c++)
 	{
@@ -147,17 +139,20 @@ void matriz()
 
 void sumar()
 {
-	for (int c = 0; c < 5; ++c) {
-        for (int f = 0; f < 5; ++f)
-            res[c][f] = a[c][f] + b[c][f];  //res es matriz resultado de suma de matriz a y matriz b
-    }
+	for (int c=0; c <tamano; c++){
+		for (int f=0; f <tamano; f++){
+			res[f][c]=a[f][c]+b[f][c];
+		}//fin del segundo for
+	}//fin del primer for
+    
 	cout <<"La suma de matrices es: " <<endl;
-
 	for (int c = 0; c < 5; ++c) {
         for (int j = 0; f < 5; ++f)
             cout << res[c][f] << '\t';
         cout << '\n';
     }	
+    system("pause");
+    matriz();
 }//FIN DE F SUMAR
 
 
@@ -165,36 +160,44 @@ void sumar()
 void restar()
 {
 		
-			for (int c = 0; c < 5; ++c) {
-        for (int f = 0; f < 5; ++f)
-            res[c][f] = a[c][f] - b[c][f];  //res es matriz resultado de suma de matriz a y matriz b
-    }
+	for (int c=0; c <tamano; c++){
+		for (int f=0; f <tamano; f++){
+			res[f][c]=a[f][c]-b[f][c];
+		}//fin del segundo for
+	}//fin del primer for
+    
 	cout <<"La resta de matrices es: " <<endl;
-
 	for (int c = 0; c < 5; ++c) {
         for (int j = 0; f < 5; ++f)
             cout << res[c][f] << '\t';
         cout << '\n';
     }
+    system("pause");
+    matriz();
 }//FIN DE F RESTAR
 
 
 
 void multip()
 {
-	for (int c = 0; c < 5; ++c)
-        for (int f = 0; f < 5; ++f)
-            for (int i = 0; i < 5; ++i)
-            {
-                res[c][f] += a[c][f] * b[c][f];
-            }
+		//hacer multiplicacion
+	for (f=0;f<tamano;f++){
+	for (c=0;c<tamano;c++){
+	res[f][c]=0;
+         for (int k=0;k<tamano;k++){
+		 res[f][c]=res[f][c]+a[f][k]*b[k][c];
+        	}//fin del tercer for
+        }//fin del segundo for
+    }//fin del primer for
+    //escribo la multiplicacion
     cout <<"La multiplicacion de matrices es: " <<endl;
-    
     for (int c = 0; c < 5; ++c) {
-        for (int f = 0; f < 5; ++f)
-            cout << res[c][f] << '\t';
+        for (int f = 0; f < 5; ++f){
+            cout << res[c][f] << '\t';}
         cout << '\n';
-    }	
+    }
+	system("pause");
+    matriz();	
 }//FIN DE F MULTIPLICAR
 
 
@@ -210,6 +213,7 @@ void salir()
 
 void poner()
 {
-	
+	system("cls");
+	main();	
 }//FIN DE F PONER
 

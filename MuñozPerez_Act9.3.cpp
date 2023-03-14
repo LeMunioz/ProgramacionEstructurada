@@ -29,6 +29,7 @@ int a[10][10];//matriz 1
 int b[10][10];//matriz 2
 int res[10][10];//matriz 3
 int aux[10][10];
+int opcion;
 //libreria de funciones
 #include "func9.cpp"
 
