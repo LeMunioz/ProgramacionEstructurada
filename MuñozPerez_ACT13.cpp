@@ -19,8 +19,8 @@ int main();
 void escoger();
 void aleatorio();
 void juego();
-void acierto();
 void gameover();
+void victoria();
 
 //VARIABLES
 char BANCO[21][21]={"automovil", "cocodrilo", "rascacielos", "murcielago", "lavatrastes", 
@@ -32,8 +32,10 @@ char palabra[20];
 char palabraaux[20];
 int opc;
 int esc;//para escoger
-int n;
-int contadorfallos=0;
+int encontrado;
+int contadorfallos;
+int contadoracierto;
+int fallos;
 //colores del mono
 int a=0;
 int b=0;
@@ -44,6 +46,17 @@ int f=0;
 
 
 int main(){
+a=0;
+b=0;
+c=0;
+d=0;
+e=0;
+f=0;
+contadorfallos=0;
+contadoracierto=0;
+fallos=0;
+encontrado=0;
+esc=0;
 
 	system("cls");
 	color(15);
@@ -79,12 +92,12 @@ int main(){
 				system("pause");
 				main();	
 		}//fin del if para validar
-	}//fin del while para validar
-	
+	}//fin del while para validar	
 }//FIN DE F MAIN
 
+
 void escoger(){
-	cout<<"PALABRAS A EsCOGER :";
+	cout<<"PALABRAS A ESCOGER :";
 			for(int i=0; i <21; i++){
 				color(3);
 				cout<<"["<<i<<"]";
@@ -106,7 +119,6 @@ void escoger(){
 					palabra[x]=BANCO[esc][x];//extrameos palabra vector del banco
 					//cout<<palabra[x];  SOLO PARA COMFIRMAR QUE LA AGARRO
 					}//fin del for palabra
-			system("pause");
 			juego();				
 }//FIN DE F ESCOGER
 
@@ -118,7 +130,6 @@ void aleatorio(){
 					palabra[x]=BANCO[esc][x];//extrameos palabra vector del banco
 					//cout<<palabra[x]; SOLO PARA COMFIRMAR QUE LA AGARRO
 					}//fin del for palabra
-	system("pause");
 	juego();				
 }//FIN DE F ALEATORIO
 
@@ -127,27 +138,8 @@ void juego(){
 	system("cls");
 	color(13);
 	//VIDAS
-	if(contadorfallos ==1){
-				a=15;
-			}
-			if(contadorfallos ==2){
-				b=15;
-			}
-			if(contadorfallos ==3){
-				c=15;
-			}
-			if(contadorfallos ==4){
-				d=15;
-			}
-			if(contadorfallos ==5){
-				e=15;
-			}
-			if(contadorfallos ==6){
-				f=15;
-			}
-			if(contadorfallos ==7){
-				gameover();
-			}
+	
+	
 	//FIGURA
 	color(12);
 	cout<<"_________________"<<endl;
@@ -168,17 +160,31 @@ void juego(){
 	color(15);	
 	
 	//PALABRA
-	cout<<"[ ";
-	for(int i=0; i<sizeof(palabra);i++){
-		palabraaux[i];	
+	for(int i=0; i<sizeof(palabra);i++){	
+		cout<<palabra[i];
+	}cout<<endl;
+	for(int i=0; i<sizeof(palabra);i++){	
 		cout<<palabraaux[i];
 	}
-	cout<<" ]"<<endl;
+	cout<<endl;
+	for(int i=0; i<sizeof(palabra);i++){
+		cout<<"-";
+	}
+	
+	//VERIFICAMOS SI HA GANADO
+	for(int i=0; i<sizeof(palabra); i++){
+		if (palabra[i]==palabraaux[i]){
+		contadoracierto++;
+		}
+	}//fin de for aciertos
+	if(contadoracierto==sizeof(palabra)){
+		victoria();
+	}
 	
 	//LEER INTENTO
 	color(7);
-	cout<<"COLOQUE UNA LETRA:"<<endl;
-	color(13);
+	cout<<endl<<"COLOQUE UNA LETRA:"<<endl;
+	color(1);
 	while (true){ //validacion
 			if (cin >> intento){
 					break; 
@@ -190,32 +196,60 @@ void juego(){
 				juego();
 			}
 			}//fin de while validacion
+			
 	//BUSCAMOS LETRA EN EL VECTOR
+	int n=0;
+	
 	for(int i=0; i<sizeof(palabra);i++){
-		if (intento==palabra[i]){
-			acierto();			
+		if (palabra[i]!=intento){
+			palabraaux[i]='_';
+			contadorfallos++;
 		}else{
-			++contadorfallos;
-			juego();
+			palabraaux[i]=intento;	
 		}
+	}	
+	if (contadorfallos>sizeof(palabra)){
+		++fallos;
+				if(fallos ==1){
+					a=15;
+				}
+				if(fallos ==2){
+					b=15;
+				}
+				if(fallos ==3){
+					c=15;
+				}
+				if(fallos ==4){	
+					d=15;
+				}
+				if(fallos ==5){
+					e=15;
+				}
+				if(fallos ==6){
+					f=15;
+				}
+				if(fallos ==7){
+					gameover();
+				}
 		}
+		juego();
+				
+		
 }//FIN DE F JUEGO
 
+//gotoxy(x, y);
 
-void acierto(){
-	
-}
 
 void gameover(){
 	//como ya perdio, quitemos sus fallos
-int a=0;
-int b=0;
-int c=0;
-int d=0;
-int e=0;
-int f=0;
+	system("cls");
+a=0;
+b=0;
+c=0;
+d=0;
+e=0;
+f=0;
 	contadorfallos=0;
-	
 	
 	color(12);
 	cout<<"================="<<endl;
@@ -252,4 +286,219 @@ int f=0;
 			}//fin de while validacion			
 }//FIN DE  GAMEOVER
 
+void victoria(){
+	system("cls");
+a=0;
+b=0;
+c=0;
+d=0;
+e=0;
+f=0;
+	contadorfallos=0;
+	
+	color(2);
+	cout<<"\n================="<<endl;
+	cout<<"|   VICTORIA    |"<<endl;
+	cout<<"================="<<endl;
+	
+	color(15);
+	cout<<"Volver a intentar?"<<endl;
+	color(10);
+	cout<<"[1] SI";
+	color(13);
+	cout<<"   [2] NO"<<endl;
+	
+	while (true){ //validacion
+			if (cin >> opc){
+				switch(opc){
+					case 1: 
+						main();
+						break;
+					case 2:
+						abort();
+						break;
+					default:
+						cout<<"esa no es una opcion querido"<<endl;
+						break;	
+				}//fin de switch
+			}else{
+				cout <<"Ponga un numero mi rey porfas"<<endl;
+				cin.clear();
+				cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+				system("pause");
+				victoria();
+			}
+			}//fin de while validacion	
+}//FIN DE F VICTORIA
+
+
+/*
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+string palabra;
+int main(){
+//VOIDS
+void palabras();
+void juego();
+//VARIABLES
+//MENU Y REPETICION
+int eleccion;
+char otra; //repetir con while
+do{//repetir ciclo while_do
+        cout<<"ELIGE UNA OPERACION"<<endl;
+        cout<<"1. INGRESAR PALABRAS O FRASES"<<endl;
+        cout<<"2. JUEGO AHORCADO"<<endl;
+        cout<<"3. SALIR"<<endl;
+        cout<<"ELIGE UNA OPCION: ";
+        cin>>eleccion;
+//VALIDACION DE VALOR INGRESADO, SOLO NUMEROS
+//YA DECLARADO EN LA VARIABLE TIPO INT ENTERO
+    if (eleccion == false){
+    cout<<"ERROR El dato ingresado es una letra o texto"<<endl;
+    }else{//COMIENZO DE SWITCH Y CASOS
+    switch (eleccion){
+    case 1:
+        cout<<"PALABRAS"<<endl;
+        palabras();
+
+    break;
+/////////////////////////////////////////////////////////////////////
+    case 2:
+        cout<<"JUEGO AHORCADO"<<endl;
+       juego();
+    break;
+    case 3:
+    cout<<"\nSALIR\n";
+    exit(EXIT_SUCCESS);
+    break;
+default:
+	cout<<"\nNo es valido"<<endl;
+break;
+
+}//switch
+}//if - else
+
+//CODIGO GENERAL PARA TERMINAR Y VOLVER
+	cout<<"\nSi deseas CONTINUAR preciona S,\nSi deseas SALIR preciona cualquier letra"<<endl;
+	cin>>otra;
+}//CICLO DO WHILE ACEPTANDO MAYUSCULAS O MINUSCULAS
+	while ((otra=='S') || (otra=='s'));
+
+//FINALIZACION DEL PROGRAMA
+	cout<<"Fin del programa"<<endl;
+	exit(EXIT_SUCCESS);
+return 0;
+}
+
+void palabras(){
+    string palabra;
+    int vocales = 0, consonantes = 0, espacios = 0;
+    // Pedir al usuario una palabra o frase
+    cout << "INGRESA UNA PALABRA O FRASE: ";
+    getline(cin, palabra);
+    // Contar el número de vocales, consonantes y espacios
+    transform(palabra.begin(), palabra.end(), palabra.begin(), ::tolower);
+    for (char c : palabra) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            vocales++;
+        } else if (c >= 'a' && c <= 'z') {
+            consonantes++;
+        } else if (c == ' ') {
+            espacios++;
+        }
+    }
+    // Determinar si es una palabra palíndromo
+    string palabra_invertida = palabra;
+    reverse(palabra_invertida.begin(), palabra_invertida.end());
+    bool palindromo = (palabra == palabra_invertida);
+    // Convertir palabra o frase a Mayúsculas y minúsculas
+    string palabra_mayusculas = palabra;
+    transform(palabra_mayusculas.begin(), palabra_mayusculas.end(), palabra_mayusculas.begin(), ::toupper);
+    string palabra_minusculas = palabra;
+    transform(palabra_minusculas.begin(), palabra_minusculas.end(), palabra_minusculas.begin(), ::tolower);
+
+    // Mostrar resultados
+    cout << "Vocales: " << vocales << endl;
+    cout << "Consonantes: " << consonantes << endl;
+    cout << "Espacios: " << espacios << endl;
+    if (palindromo) {
+        cout << "La palabra/frase es un palindromo." << endl;
+    } else {
+        cout << "La palabra/frase no es un palindromo." << endl;
+    }
+    cout << "Palabra/frase en mayusculas: " << palabra_mayusculas << endl;
+    cout << "Palabra/frase en minusculas: " << palabra_minusculas << endl;
+
+    // Solicitar otra palabra o frase y que se concatene con la anterior
+    string otra_palabra;
+    cout << "INGRESA OTRA PALABRA O FRASE: ";
+    getline(cin, otra_palabra);
+    palabra += " " + otra_palabra;
+
+    // Contar el número de vocales, consonantes y espacios
+    transform(otra_palabra.begin(), otra_palabra.end(), otra_palabra.begin(), ::tolower);
+    for (char c : otra_palabra) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            vocales++;
+        } else if (c >= 'a' && c <= 'z') {
+            consonantes++;
+        } else if (c == ' ') {
+            espacios++;
+        }
+    }
+
+    // Determinar si es una palabra palíndromo
+    string palabra_invertida2 = otra_palabra;
+    reverse(palabra_invertida2.begin(), palabra_invertida2.end());
+    bool palindromo2 = (otra_palabra == palabra_invertida2);
+
+    // Mostrar resultados
+    cout << "Vocales: " << vocales << endl;
+    cout << "Consonantes: " << consonantes << endl;
+    cout << "Espacios: " << espacios << endl;
+    if (palindromo2) {
+        cout << "La palabra/frase es un palindromo." << endl;
+    } else {
+        cout << "La palabra/frase no es un palindromo." << endl;
+    }
+    cout << "Palabra/frase en mayusculas: " << palabra_mayusculas << endl;
+    cout << "Palabra/frase en minusculas: " << palabra_minusculas << endl;
+
+    cout << "La nueva palabra/frase concatenada es: " << palabra << endl;
+}
+//////////////////////////////////////////////////////////////////////////////
+void juego(){
+    system("cls");
+    cout << "JUEGO DEL AHORCADO" << endl;
+    cout << "Para comenzar pudes pedir a alguien \nque trate de adivinar las palabras \nque introduciste con anterioridad" << endl;
+    string respuesta(palabra.length(), '_'); // Generar cadena de '_'
+    int intentos = 5;
+    while (intentos > 0 && respuesta != palabra) {
+        cout << "Palabra: " << respuesta << endl;
+        cout << "Intentos restantes: " << intentos << endl;
+        cout << "Ingrese una letra: ";
+        char letra;
+        cin >> letra;
+        bool encontrada = false;
+        for (int i = 0; i < palabra.length(); i++) {
+            if (palabra[i] == letra) {
+                respuesta[i] = letra;
+                encontrada = true;
+            }
+        }
+        if (!encontrada) {
+            intentos--;
+            cout << "La letra ingresada no se encuentra en la palabra." << endl;
+        }
+        system("cls");
+    }
+    if (respuesta == palabra) {
+        cout << "¡HAS ADIVINADO!" << endl;
+    } else {
+        cout << "PERDISTE. LA PALABRA ES: " << palabra << endl;
+    }
+}*/
 
