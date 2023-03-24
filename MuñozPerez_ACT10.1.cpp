@@ -15,6 +15,7 @@ using namespace std;
 int tamano;
 int A[0];
 int x;
+int suma;
 //FUNCIONES
 int main();
 void menu();
@@ -90,10 +91,10 @@ void menu()
 			menu();
 			break;		
 		case 4://SUMAR
-			int suma;
+			
 			sumar();
 			//escribo suma
-			cout<<"la suma es: ["<<suma<<"]"<<endl;
+			
 			system("pause");
 			menu();	
 			break;

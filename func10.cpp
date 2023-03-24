@@ -55,7 +55,7 @@ void ordenar()
 }//FIN DE F ORDENAR
 
 
-void sumar()
+int sumar()
 {
 	int suma= 0;//resultado de la suma
 	int x= 0;//donde guardar numeros
@@ -63,7 +63,8 @@ void sumar()
 		x+=A[i]+A[i];
 		suma=x/2;
 	}
-	
+	cout<<"la suma es: ["<<suma<<"]"<<endl;
+	return 0;
 }//FIN DE F SUMAr
 
 
