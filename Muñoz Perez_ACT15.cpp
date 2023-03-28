@@ -2,6 +2,7 @@
 #include <limits>
 #include "colores.cpp"
 #include <string>
+#include <ctime>
 using namespace std;
 /*
 [ANGEL EDUARDO MUÑOZ PEREZ]
@@ -16,27 +17,27 @@ void juegop();//juego conta otro jugador
 void avanzaturnosp();
 void juegoc();//juego contra la computadora
 void avanzaturnosc();
-void salir();
 void victoria();
+void fracaso();
 
-/*int id[20];
-struct puntaje;{
-	string nombre;
+
+struct puntos{
+	char nombre[6];
 	int punto;
-}id[20];*/
+}puntaje[8];
 
 //variables
-int numero;
-char o='O';
-char x='X';
 int turno;
+int turnoreal;
+int turnoganador;
 char gato[3][3];
 #include "func15.cpp"
 
-int main(){
+int  main(){
 	system("cls");
 	int opcion;
 	int turno=0;
+	int turnoreal=0;
 	int numero=1;
 	
 	color(10);
@@ -47,6 +48,7 @@ int main(){
 	cout<<"\t| [1] contra cpu   |"<<endl;
 	cout<<"\t| [2] contra otro  |"<<endl;
 	cout<<"\t| [3] SALIR        |"<<endl;
+	cout<<"\t| [4] ver puntajes |"<<endl;
 	cout<<"\t--------------------"<<endl;
 	
 	//vaciamos la matriz
@@ -60,14 +62,17 @@ int main(){
 		if(cin>>opcion){
 			switch(opcion){
 				case 1:
-					juegoc();
+					avanzaturnosc();
 					break;
 				case 2:
-					juegop();
+					avanzaturnosp();
 					break;
 				case 3:
-					salir();
+					abort();//SALE DEL PROGRAMA                              ***
 					break;
+				case 4:
+					puntos();
+					break;	
 				default:
 					color(12);
 					cout<<"Esa no es una opcion querido"<<endl;
@@ -89,9 +94,11 @@ void avanzaturnosp(){
 }
 void juegop(){//juego contra otra persona
 	system("cls");
-	int turnoreal;
+	
 	int columna;
 	int fila;
+	char jugada;
+	
 	
 	//para avanzar un turno cada que empieze nueva jugada 
 	if(turno == 1 or turno == 3 or turno == 5 or turno == 7 or turno ==9){
@@ -101,110 +108,272 @@ void juegop(){//juego contra otra persona
 	}
 	
 	//Escribimos el gato
+	cout<<turno<<endl;
 	color(3);
 	cout<<"|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|\n"<<endl;
 	color(15);
 	dibujagato(gato);
 	
 	//checa si hay algun ganador
-	if (checa3linea(gato, o, x)==true){
+	if (checa3linea(gato, 'X')){
+	victoria();
+	}else if(checa3linea(gato, 'O')){
 	victoria();
 	}else{//SI NO, HACE EL PROCESO
 		switch(turnoreal){
 			case 1:
 				color(3);
 				cout<<"turno de jugador no. 1"<<endl;
-				cout<<"Escoge un lugar"<<endl;
+				cout<<"\nEscoge un lugar"<<endl;
 				cout<<"COLUMNA -->";
-				color(15);
-				//VALIDACION
-				while (true){
-					if(cin >> columna and columna >0 and columna <4){
-						break;
+				jugada= 'O';
+		//JUGADA DE JUGADOR !	
+					color(15);
+						//VALIDACION
+						while (true){
+							if(cin >> columna and columna >0 and columna <4){
+								break;
+							}else{
+								cout<<"ponlo bien porfas"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+								system("pause");
+								juegop();		
+							}//fin del if validacion
+						}//fin del while validacion
+						color(3);
+						cout<<"FILA -->";	
+						while (true){
+							if(cin >> fila and fila >0 and fila <4){
+								break;
+							}else{
+								cout<<"ponlo bien porfas"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+								system("pause");
+								juegop();		
+							}//fin del if validacion
+						}//fin del while validacion
+		//PARA CHECAR QUE EL ESPACIO ESTA VACIO				
+					if(gato[columna][fila] == '.'){
+					gato[columna][fila] = jugada;
+					turnoganador=turnoreal; //por si gana, guardar cual fue ese turno
+					avanzaturnosp();
 					}else{
-						cout<<"ponlo bien porfas"<<endl;
-						cin.clear();
-						cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+						color(12);
+						cout<<"Ese color esta ocupado"<<endl;
+						cout<<"intenta de nuevo"<<endl;
 						system("pause");
-						juegop();		
-					}//fin del if validacion
-				}//fin del while validacion
-				cout<<"FILA -->";	
-				while (true){
-					if(cin >> fila and fila >0 and fila <4){
-						break;
-					}else{
-						cout<<"ponlo bien porfas"<<endl;
-						cin.clear();
-						cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-						system("pause");
-						juegop();		
-					}//fin del if validacion
-				}//fin del while validacion
-				//ASIGNACION
-				gato[columna][fila]='O';
-				avanzaturnosp();	
-			break;
+						juegop();
+					}//fin del if de CHEQUEO SI ESTA LLENO
+				break;	
+					
+		//JUGADA DE JUGADOR 2	
 			case 2:
 				color(3);
 				cout<<"turno de jugador no. 2"<<endl;
-				cout<<"Escoge un lugar"<<endl;
+				cout<<"\nEscoge un lugar"<<endl;
 				cout<<"COLUMNA -->";
-				color(15);
-				//VALIDACION
-				while (true){
-					if(cin >> columna and columna >0 and columna <4){
-						break;
+				jugada='X';
+					
+					color(15);
+					//VALIDACION
+					while (true){
+						if(cin >> columna and columna >0 and columna <4){
+							break;
+						}else{
+							cout<<"ponlo bien porfas"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+							system("pause");
+							juegop();		
+						}//fin del if validacion
+					}//fin del while validacion
+					color(3);
+					cout<<"FILA -->";	
+					while (true){
+						if(cin >> fila and fila >0 and fila <4){
+							break;
+						}else{
+							cout<<"ponlo bien porfas"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+							system("pause");
+							juegop();		
+						}//fin del if validacion
+					}//fin del while validacion
+		//PARA CHECAR QUE EL ESPACIO ESTA VACIO			
+					if(gato[columna][fila] == '.'){
+					gato[columna][fila] = jugada;
+					turnoganador=turnoreal; //por si gana, guardar cual fue ese turno
+					avanzaturnosp();
 					}else{
-						cout<<"ponlo bien porfas"<<endl;
-						cin.clear();
-						cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+						color(12);
+						cout<<"Ese color esta ocupado"<<endl;
+						cout<<"intenta de nuevo"<<endl;
 						system("pause");
-						juegop();		
-					}//fin del if validacion
-				}//fin del while validacion
-				cout<<"FILA -->";	
-				while (true){
-					if(cin >> fila and fila >0 and fila <4){
-						break;
-					}else{
-						cout<<"ponlo bien porfas"<<endl;
-						cin.clear();
-						cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-						system("pause");
-						juegop();		
-					}//fin del if validacion
-				}//fin del while validacion
-				//ASIGNACION
-				gato[columna][fila]='X';
-				avanzaturnosp();
+						juegop();
+					}//fin del if de CHEQUEO SI ESTA LLENO
+				
 			break;
 			default:
 			cout<<"hubo un problemita, no deberia ser posible esto xd"<<endl;
+			cout<<"ERROR (SWITCH DE LOS TURNOS REALES)"<<endl;
 			system("pause");
 			main();	
+			break;
 		}//fin del switch
 	}//fin del if de chequeo si hay victoria
 }//FIN DE FUNCION JUEGOP/////////////////////////////////////////////////
 
 
-void juegoc(){
-	cout<<"hola";
+
+void avanzaturnosc(){
+	turno++;
+	juegoc();
+}
+void juegoc(){//JUEGO CONTRA LA COMPUTADORA
+	system("cls");
+	
+	int columna;
+	int fila;
+	char jugada;
+	
+	
+	//para avanzar un turno cada que empieze nueva jugada 
+	if(turno == 1 or turno == 3 or turno == 5 or turno == 7 or turno ==9){
+		turnoreal=1;
+	}else if(turno == 2 or turno == 4 or turno == 6 or turno == 8){
+		turnoreal=2;
+	}else if(turno >9){
+		turnoreal=3;
+	}
+	
+	//Escribimos el gato
+	cout<<turno<<endl;
+	color(3);
+	cout<<"|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|- :3 -|\n"<<endl;
+	color(15);
+	dibujagato(gato);
+	
+		//checa si hay algun ganador
+	if (checa3linea(gato, 'X')){
+	fracaso();
+	}else if(checa3linea(gato, 'O')){
+	victoria();
+	}else{//SI NO, HACE EL PROCESO
+		switch(turnoreal){
+			case 1://JUGADOR
+				color(3);
+				cout<<"turno de jugador no. 1"<<endl;
+				cout<<"\nEscoge un lugar"<<endl;
+				cout<<"COLUMNA -->";
+				jugada= 'O';
+		//JUGADA DE JUGADOR !	
+					color(15);
+						//VALIDACION
+						while (true){
+							if(cin >> columna and columna >0 and columna <4){
+								break;
+							}else{
+								cout<<"ponlo bien porfas"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+								system("pause");
+								juegoc();		
+							}//fin del if validacion
+						}//fin del while validacion
+						color(3);
+						cout<<"FILA -->";	
+						while (true){
+							if(cin >> fila and fila >0 and fila <4){
+								break;
+							}else{
+								cout<<"ponlo bien porfas"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+								system("pause");
+								juegoc();		
+							}//fin del if validacion
+						}//fin del while validacion
+		//PARA CHECAR QUE EL ESPACIO ESTA VACIO				
+					if(gato[columna][fila] == '.'){
+					gato[columna][fila] = jugada;
+					turnoganador=turnoreal; //por si gana, guardar cual fue ese turno
+					avanzaturnosc();
+					}else{
+						color(12);
+						cout<<"Ese color esta ocupado"<<endl;
+						cout<<"intenta de nuevo"<<endl;
+						system("pause");
+						juegoc();
+					}//fin del if de CHEQUEO SI ESTA LLENO
+				break;	
+		//JUGADA DE COMPUTADORA	
+			case 2: 
+				cout<<"PIENSA RAPIDO"<<endl;	
+				jugada='X';	
+						
+				srand((unsigned)time(NULL));//para que me cree numeros aleatorios
+				columna= 1 + rand()% 3;//genero un aleatorio del 1 al 3
+				
+			
+				fila= 1 + rand()% 3;//genero un aleatorio del 1 al 3	
+			//PARA CHECAR QUE EL ESPACIO ESTA VACIO				
+					if(gato[columna][fila] == '.'){
+					gato[columna][fila] = jugada;
+					turnoganador=turnoreal; //por si gana, guardar cual fue ese turno
+					avanzaturnosc();
+					}else{
+						cout<<columna<<" y  "<<fila<<"esta ocupada"<<endl;
+						juegoc();
+					}//fin del if de CHEQUEO SI ESTA LLENO	
+				break;
+			case 3:
+				cout<<"nadie gano xd"<<endl;
+				system("pause");
+				main();
+				break;	
+			default:
+			cout<<"hubo un problemita, no deberia ser posible esto xd"<<endl;
+			cout<<"ERROR (SWITCH DE LOS TURNOS REALES.cpu)"<<endl;
+			system("pause");
+			main();	
+			break;
+		}//fin del switch	
+	}//fin del if CHEQUEO SI GANO ALGUIEN
 }//FIN DE FUNCION JUEGOCPU///////////////////////////////////////////////
 
 
-void salir(){
-	cout<<"hola";
-}
 
 
 void victoria(){
 	system("cls");
 	color(10);
+	int lugar;//para guardar la imformacion en su archivero
 	
 	cout<<"*_*_*_*_*_*_*_*_*_*_*"<<endl;
 	cout<<"\t VICTORIA"<<endl;
 	cout<<"*_*_*_*_*_*_*_*_*_*_*"<<endl;
+	cout<<"GANO EL JUGADOR "<<turnoganador<<endl;
+	
+	//GUARDAMOS EL GANADOR
+	color(9);
+	cout<<"donde lo guardamos?  "<<endl;
+	if (cin>> lugar && lugar >0 && lugar <9){
+		cout<<"good"<<endl;
+	}else{
+		cout<<"pon un numero bien compa, tengo espacios entre el 1 y el 8"<<endl;
+		cin.clear();
+			cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+			system("pause");
+			victoria();	
+	}
+	cout<<"Pon tu nobre campeon"<<endl;
+	cin.getline(puntaje[lugar].nombre, '8', '\n');
+	puntaje[lugar].punto+=10;
+	cout<<"+10 puntos"<<endl;
+	
 	
 	int opc;
 	color(2);
@@ -218,7 +387,7 @@ void victoria(){
 					main();
 					break;
 				case 2:
-					salir();
+					abort();//SALE DEL PROGRAMA                              ***
 					break;
 				default:
 					cout<<"Pon uno de los numeros de arriba mi rey"<<endl;
@@ -234,4 +403,59 @@ void victoria(){
 			victoria();	
 		}//fin del if validacion
 	}//fin del while para validar
-}//FIN DE LA FUNCION DE VICTORIA
+}//FIN DE LA FUNCION DE VICTORIA////////////////////////////////////////////////////////////////////////
+
+
+void fracaso(){
+	color(14);
+	cout<<"		*	,MMM8&&&.	   *"<<endl;
+	cout<<" .      MMMM88&&&&    . "<<endl;
+	cout<<"   °  .MMMM88&&&&&|      ."<<endl;
+	cout<<"       MMMM88&&&&&}     * "<<endl;
+	cout<<" .     MMMM88&&&&&|       . "<<endl;
+	cout<<"        MMMM88&&&&'   °    "<<endl;
+	cout<<"  *      'MM8&&&&'     . "<<endl; 	color(15);
+	cout<<"       /\/|_        .    "<<endl;
+	cout<<"      /    -\         "<<endl;
+	cout<<"      \   ==Y    *"<<endl;
+	cout<<"       )==*('  ";color (14); cout<<" *  ."<<endl; color(15);
+	cout<<"      /     \ "<<color (14); cout<<"     °"<<endl; color(15);
+	cout<<"      |  n   |"<<color (14); cout<<"         ."<<endl; color(15);
+	cout<<"     /  ( (  \ "<<endl;
+	cout<<"     \   ) ) /"<<color (14); cout<<" *     ."<<endl; color(15);
+	cout<<"      \  ( (/ "<<endl; color(2);
+	cout<<"//\/|/\\|\\|\/|\\///\|\\//|\||/"<<endl;
+	 
+	color(12);
+    cout<<"    PERDISTE ESTIMADO :("<<endl;
+	
+	int opc;
+	color(2);
+	cout<<"\nQuieres jugar otravez?"<<endl;
+	cout<<"[1] SI         [2] NO"<<endl;
+	
+	while (true){
+		if(cin >> opc){
+			switch(opc){
+				case 1:
+					main();
+					break;
+				case 2:
+					abort();//SALE DEL PROGRAMA                              ***
+					break;
+				default:
+					cout<<"Pon uno de los numeros de arriba mi rey"<<endl;
+					system("pause");
+					fracaso();		
+			}//fin del switch
+		}else{
+			color(12);
+			cout<<"Bro por gente como tu es que me la paso validando entradas >:c"<<endl;
+			cin.clear();
+			cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+			system("pause");
+			fracaso();	
+		}//fin del if validacion
+	}//fin del while para validar
+	  
+}//FIN DE LA UNCION FRACASO/////////////////////////////////////////////////////////////////////////////
