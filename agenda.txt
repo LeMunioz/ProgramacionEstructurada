@@ -1,6 +1,6 @@
 NOMBRE: , LUGAR:, , , EDAD: 0, ESTATURA: 0
-NOMBRE: AngelPerez, LUGAR:Tepatitlan, capilla, Jalisco, EDAD: 12, ESTATURA: 189
-NOMBRE: EduardoRocha, LUGAR:Tepatilan, capilla, Jalisco, EDAD: 20, ESTATURA: 149
-NOMBRE: CarlosSanchez, LUGAR:Tepatitlan, tepatitlan, Jalisco, EDAD: 41, ESTATURA: 170
-NOMBRE: MoniMu¤oz, LUGAR:Arandas, Arandas, Jalisco, EDAD: 13, ESTATURA: 167
-NOMBRE: VeroCortes, LUGAR:Morelos, Capilla, Jalisco, EDAD: 31, ESTATURA: 199
+NOMBRE: aaïsd, LUGAR:, , , EDAD: 0, ESTATURA: 0
+NOMBRE: asf, LUGAR:, , , EDAD: 0, ESTATURA: 0
+NOMBRE: asd, LUGAR:, , , EDAD: 0, ESTATURA: 0
+NOMBRE: eqw, LUGAR:, , , EDAD: 0, ESTATURA: 0
+NOMBRE: as, LUGAR:, , , EDAD: 0, ESTATURA: 0

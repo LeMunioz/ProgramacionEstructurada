@@ -1,7 +1,6 @@
 #include <iostream>
 #include <limits>
-#include "colores.cpp"
-#include <fstream>
+#include "colores.cpp",#include <fstream>
 #include <sstream>
 
 using namespace std;
@@ -22,9 +21,10 @@ void salir();
 void cambiar();
 void leer();
 void escribir();
+void extraer();
 //ESTRUCTURAS
 int tamano=1;
-
+string texto;//para copiar cosas del archivo
 struct agenda{
 	char nombre[12];
 	char apeido[24];
@@ -304,6 +304,7 @@ void guardar(){
 		main();
 	}//fin del if
 }//FIN DE F GUARDAR////////////////////////////
+
 
 void salir(){
 	color(14);
