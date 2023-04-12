@@ -264,6 +264,7 @@ void escribir(){
 							for(f=0;f<tamano;++f)
 							{
 								if (cin >> num){
+									cout<<"pon el numero de ("<<c<< ","<<f<<")"<<endl;
 								a[f][c]=num; 	
 								}else{
 									cout<<"pon un numero we"<<endl;
@@ -280,6 +281,7 @@ void escribir(){
 							for(f=0;f<tamano;++f)
 							{
 								if (cin >> num){
+									cout<<"pon el numero de ("<<c<< ","<<f<<")"<<endl;
 								b[f][c]=num; 	
 								}else{
 									cout<<"pon un numero we"<<endl;

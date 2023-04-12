@@ -36,8 +36,7 @@ char gato[3][3];
 int  main(){
 	system("cls");
 	int opcion;
-	int turno=0;
-	int turnoreal=0;
+	
 	int numero=1;
 	
 	color(10);
@@ -62,9 +61,13 @@ int  main(){
 		if(cin>>opcion){
 			switch(opcion){
 				case 1:
+					turno=0;
+					turnoreal=0;
 					avanzaturnosc();
 					break;
 				case 2:
+					turno=0;
+					turnoreal=0;
 					avanzaturnosp();
 					break;
 				case 3:
@@ -76,6 +79,8 @@ int  main(){
 				default:
 					color(12);
 					cout<<"Esa no es una opcion querido"<<endl;
+					system("pause");
+					main();
 					break;			
 			}//fin del switch
 		}else{
@@ -105,7 +110,10 @@ void juegop(){//juego contra otra persona
 		turnoreal=1;
 	}else if(turno == 2 or turno == 4 or turno == 6 or turno == 8){
 		turnoreal=2;
+	}else if(turno > 9){
+		turnoreal=3;
 	}
+	
 	
 	//Escribimos el gato
 	cout<<turno<<endl;
@@ -214,7 +222,12 @@ void juegop(){//juego contra otra persona
 						system("pause");
 						juegop();
 					}//fin del if de CHEQUEO SI ESTA LLENO
-				
+					break;
+		case 3:
+				color(12);			
+				cout<<"NAdie gano xd"<<endl;
+				system("pause");
+				main();		
 			break;
 			default:
 			cout<<"hubo un problemita, no deberia ser posible esto xd"<<endl;
@@ -369,8 +382,9 @@ void victoria(){
 			system("pause");
 			victoria();	
 	}
-	cout<<"Pon tu nobre campeon"<<endl;
-	cin.getline(puntaje[lugar].nombre, '8', '\n');
+	cout<<"Pon tu nombre campeon"<<endl;
+	fflush(stdin);//para que quite si hay algo escrto y me deje leer un string
+	cin.getline(puntaje[lugar].nombre, '6', '\n');
 	puntaje[lugar].punto+=10;
 	cout<<"+10 puntos"<<endl;
 	
@@ -408,24 +422,25 @@ void victoria(){
 
 void fracaso(){
 	color(14);
-	cout<<"		*	,MMM8&&&.	   *"<<endl;
+	
+	cout<<"\n		*	,MMM8&&&.	   *"<<endl;
 	cout<<" .      MMMM88&&&&    . "<<endl;
-	cout<<"   °  .MMMM88&&&&&|      ."<<endl;
+	cout<<"   \°  .MMMM88&&&&&|      ."<<endl;
 	cout<<"       MMMM88&&&&&}     * "<<endl;
 	cout<<" .     MMMM88&&&&&|       . "<<endl;
-	cout<<"        MMMM88&&&&'   °    "<<endl;
+	cout<<"        MMMM88&&&&'   .    "<<endl;
 	cout<<"  *      'MM8&&&&'     . "<<endl; 	color(15);
-	cout<<"       /\/|_        .    "<<endl;
-	cout<<"      /    -\         "<<endl;
-	cout<<"      \   ==Y    *"<<endl;
+	cout<<"       /\\/|_        .    "<<endl;
+	cout<<"      /    -\\         "<<endl;
+	cout<<"      \\   ==Y    *"<<endl;
 	cout<<"       )==*('  ";color (14); cout<<" *  ."<<endl; color(15);
-	cout<<"      /     \ "<<color (14); cout<<"     °"<<endl; color(15);
+	cout<<"      /     \\ "<<color (14); cout<<"     °"<<endl; color(15);
 	cout<<"      |  n   |"<<color (14); cout<<"         ."<<endl; color(15);
 	cout<<"     /  ( (  \ "<<endl;
-	cout<<"     \   ) ) /"<<color (14); cout<<" *     ."<<endl; color(15);
-	cout<<"      \  ( (/ "<<endl; color(2);
-	cout<<"//\/|/\\|\\|\/|\\///\|\\//|\||/"<<endl;
-	 
+	cout<<"     \\   ) ) /"<<color (14); cout<<" *     ."<<endl; color(15);
+	cout<<"      \\  ( (/ "<<endl; color(2);
+	cout<<"//\\/|/\\\\|\\\\|\/|\\\\///\\|\\\\//|\\||/"<<endl;
+
 	color(12);
     cout<<"    PERDISTE ESTIMADO :("<<endl;
 	

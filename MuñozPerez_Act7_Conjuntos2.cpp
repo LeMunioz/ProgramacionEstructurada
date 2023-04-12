@@ -120,13 +120,25 @@ void escribir()
 		case 1://para matriz 1
 			for (int i=0; i<10; i++)
 			{
-				cin >>a1[i];				
+				cin >>a1[i];
+				for(int j=0; i <10; i ++){//checar si no se repite
+					if (a1[i]==a1[j]){
+						cout<<"eso ya lo pusiste, intentemos de nuevo"<<endl;
+						system("pause");
+						escribir();
+					}
+				}//fin del for				
 			}
 				break;			
 		case 2://para matriz 2
-			for (int i=0; i<10; i++)
+			for (int j=0; j<10; j++)
 			{
-				cin >>a2[i];
+				cin >>a2[j];
+				if (a2[j]==a2[j]){
+						cout<<"eso ya lo pusiste, intentemos de nuevo"<<endl;
+						system("pause");
+						escribir();
+			}
 			}
 				break;				
 	}//fin del switch de opcion matriz		
@@ -146,99 +158,73 @@ void poner()
 	cout <<"donde quieres poner un dato?"<<endl;
 	cout <<"[1] conjunto1    [2]conjunto2"<<endl;
 	//validacion de CONJUNTO
-		while (true)
-			{
-			if (cin >> a)//si lee el conjunto
-				{
-					switch (a)//switch para ubicar el dato
-						{
-	/*CONJUNTO1*/		case 1://conjunto1
-						//PONER LUGAR
-							if (b>-1 or b <10)
-							{
-							while (true)
-								{
-								cout<<"Cual pocision quieres cambiar?"<<endl;
-								if (cin >> b) //si lee el lugar
-									{
-										break;
-									}else {
-										cout <<"Eso no es un numero joven"<<endl;
-										cin.clear();
-										cin.ignore(numeric_limits<std::streamsize>::max(), '\n');			
-									}//fin del if para validar
-								}//fin del while para validar
-								
-							//PONER DATO	
-							while (true)
-								{
-								cout<<"Que quieres poner?"<<endl;
-								if (cin >> dato) //si lee el dato
-									{
-										break;
-									}else {
-										cout <<"pon un numero o letras querido"<<endl;
-										cin.clear();
-										cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-										}//fin del if para validar
-										}//fin del while para validar
-							}//fin del if de rango
-							else{
-								cout<<"escoge algo entre 0 y 9 cariño"<<endl;
-							}
-							//ASIGNAMOS EL DATO	
+		if (cin >> a){
+			switch (a){
+				case 1: //CONJUNTO !
+					cout<<"Pon el lugar"<<endl;
+					if(cin >> b){
+						cout<<"pon el dato"<<endl;
+						if(cin >> dato){
 							a1[b]=dato;
-						break;
-	/*CONJUNTO2*/		case 2:
-						//PONER LUGAR
-							if (b>-1 or b <10)
-							{
-							while (true)
-								{
-								cout<<"Cual pocision quieres cambiar?"<<endl;
-								if (cin >> b) //si lee el lugar
-									{
-										break;
-									}else {
-										cout <<"Eso no es un numero joven"<<endl;
-										cin.clear();
-										cin.ignore(numeric_limits<std::streamsize>::max(), '\n');			
-									}//fin del if para validar
-								}//fin del while para validar
-							//PONER DATO	
-							while (true)
-								{
-								cout<<"Que quieres poner?"<<endl;
-								if (cin >> dato) //si lee el dato
-									{
-										break;
-									}else {
-										cout <<"pon un numero o letras querido"<<endl;
-										cin.clear();
-										cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-										}//fin del if para validar
-										}//fin del while para validar
-							//ASIGNAMOS EL DATO	
-							}//fin del id de rango
-							else{
-								cout<<"escoge algo entre 0 y 9 cariño"<<endl;
-							}
-							a2[b]=dato;//conjunto2 en la pocision b vale dato
-							break;
-						default:
-							cout<<"escoge 1 o 2 porfas chulo"<<endl;
-						break;
-		}//fin del switch de asignacion
-					break;
-				}else {
-					cout <<"Escoge 1 o 2 querido"<<endl;
-					cin.clear();
-					cin.ignore(numeric_limits<std::streamsize>::max(), '\n');		
-				}//fin del if para validar
-			}//fin del while para validar	
-		
-	system("pause");
-	main();	
+								for(int i=0; i <10; i++){
+								if(a1[b]==a1[i] && b!=i){//checamos si no se repite
+									cout<<"ya pusiste eso joven, escoge otro"<<endl;
+									system("pause");
+									poner();
+								}//fin del if chequeo	
+								}//fin del for
+						}else{
+							cout<<"dato no valido, repitamos proceso"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+							system("Pause");
+							poner();
+						}//fin de validacion de dato	
+					}else{
+						cout<<"lugar no valido, repitamos proceso"<<endl;
+						cin.clear();
+						cin.ignore(numeric_limits<std::streamsize>::max(), '\n');						
+						system("Pause");
+						poner();
+					}//fin de validacion de b
+				break;
+				case 2: //CONJUNTO 2
+						cout<<"Pon el lugar"<<endl;
+						if(cin >> b){
+							cout<<"Pon el dato"<<endl;
+							if(cin >> dato){
+								a2[b]=dato;
+									for(int i=0; i <10; i++){
+									if(a2[b]==a2[i] && b!=i){//checamos si no se repite
+									cout<<"ya pusiste eso joven, escoge otro"<<endl;
+									cin.clear();
+									cin.ignore(numeric_limits<std::streamsize>::max(), '\n');								
+										system("pause");
+										poner();
+									}//fin del if chequeo	
+									}//fin del for
+							}else{
+								cout<<"dato no valido, repitamos proceso"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<std::streamsize>::max(), '\n');						
+								system("Pause");
+								poner();
+							}//fin de validacion de dato	
+						}else{
+							cout<<"lugar no valido, repitamos proceso"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<std::streamsize>::max(), '\n');							
+							system("Pause");
+							poner();
+					}//fin de validacion de b
+				default:
+					cout<<"Esa no es una opcion querido"<<endl;
+					system("pause");
+					poner();			
+			}//fin del switch
+		}else{
+			cout<<"Escoge 1 o 2 we"<<endl;
+		}//in del i validacion a
 												
 	
 }//FIN DE FUNC PONER
@@ -246,10 +232,10 @@ void poner()
 
 void vaciar()
 {
-	a1[10] =" ";
-	a2[10] =" ";
-	system ("pause");
-	main();
+	for(int i=0; i <10; i++){
+	a1[i] =" ";
+	a2[i] =" ";
+	}
 }//FIN DE FUNC VACIAR
 
 
