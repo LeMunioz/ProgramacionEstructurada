@@ -20,16 +20,14 @@ using namespace std;
 int numDiscos;
 
 vector<vector<int> > torres(3);
-int torre_origen, torre_destino;
-int Torigen;
-int Tdestino;
+int Torigen, Tdestino;
+
 //FUNCIONES 
 //Para modo automatico
 void movimientos(int numDiscos, char torreA, char torreC, char torreB);
 //para modo manual
 void manual();
 void EscribeTorres(vector<vector<int> >& torres);
-void torresHanoi(int n, char torreOrigen, char torreAuxiliar, char torreDestino, int& contador);
 void victoria();
 
 
@@ -125,30 +123,32 @@ void manual(){
 	
 	while(true) {
 		
-	    cout << "Escribe de que torre a que torre quieres mover disco ";
-	    cin >> torre_origen >> torre_destino;
+		color (8);
+	    cout << "Escribe de que torre a que torre quieres mover disco "; color(15);
+	    cin >> Torigen >> Tdestino;
 	
 	    // Restar 1 para ajustar a índices de vector
-	    torre_origen--;
-	    torre_destino--;
+	    Torigen--;
+	    Tdestino--;
 	    
 		//Checa si el lugar de donde agarramos esta vacio
-	    if(torres[torre_origen].empty()) {
+	    if(torres[Torigen].empty()) {
 			color (12);	
 	        cout << "Aqui no hay nada men" << endl; color(15);
-	        continue;
+	        break;
 	    }
 		//quitamos el valor de la cola del arreglo y tronamos el espacio que ocupaba
-	    int disco = torres[torre_origen].back();
-	    torres[torre_origen].pop_back();
+	    int disco = torres[Torigen].back();
+	    torres[Torigen].pop_back();
 		//pujamos el alemento a la torre donde lo quisimo mover	
-	    if(!torres[torre_destino].empty() && disco > torres[torre_destino].back()) {
-	        cout << "Ahi no se puede estimado" << endl;
-	        torres[torre_origen].push_back(disco); // Regresar disco a torre de origen
-	        continue;
+	    if(!torres[Tdestino].empty() && disco > torres[Tdestino].back()) {
+	    	color (12);
+	        cout << "Ahi no se puede estimado" << endl; color (15);
+	        torres[Torigen].push_back(disco); // Regresar disco a torre de origen
+	        break;
 	    }
 	
-	    torres[torre_destino].push_back(disco);
+	    torres[Tdestino].push_back(disco);
 	    EscribeTorres(torres);
 	    
 	    // Checar si el usuario ha ganado
